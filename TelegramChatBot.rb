@@ -4,6 +4,16 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'dotenv'
+
+require './coefficient_calculator.rb'
+require './connection.rb'
+require './constant.rb'
+require './item_finder.rb'
+require './item_validator.rb'
+require './link_generator.rb'
+require './price.rb'
+require './task_performer.rb'
+
 # require './service_control_time_trading'
 # require './service_information_about_orders'
 # require './service_information_about_sales'
@@ -21,12 +31,21 @@ class TelegramChatBot
       bot.listen do |message|
         case message
         when Telegram::Bot::Types::Message
-          bot.api.send_message(chat_id: message.chat.id, text: 'Make a choice', reply_markup: markup1)
+          bot.api.send_message(chat_id: message.chat.id, text: 'Make a choice:', reply_markup: markup1)
         when Telegram::Bot::Types::CallbackQuery
-          if message.data == 'touch'
-            bot.api.send_message(chat_id: message.from.id, text: "Don't touch me!")
-            bot.api.send_message(chat_id: message.from.id, text: 'Make a choice2', reply_markup: markup2)
+          if message.data == 'Find New Item'
+            bot.api.send_message(chat_id: message.from.id, text: "Search is performed!")
 
+              rezult = []
+              [1,2,3,4,5,6].each do |x|
+                if x == 2 or x == 4
+                  rezult << x
+                end
+              end
+
+            bot.api.send_message(chat_id: message.from.id, text: "#{rezult}")
+
+            # bot.api.send_message(chat_id: message.from.id, text: 'Make a choice2', reply_markup: markup2)
           elsif message.data == 'touch2'
             bot.api.send_message(chat_id: message.from.id, text: "Don't touch me!2")
           elsif message.data == 'touch3'
@@ -40,7 +59,7 @@ class TelegramChatBot
   private
 
   def buttons1
-    [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Touch me', callback_data: 'touch'),
+    [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Find New Item', callback_data: 'Find New Item'),
      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Touch me2', callback_data: 'touch2')]
   end
 
