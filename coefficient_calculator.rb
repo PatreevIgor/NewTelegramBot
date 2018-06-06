@@ -36,7 +36,7 @@ class CoefficientCalculator
   def history_of_sales(item_hash)
     url = format(Constant::ITEM_HISTORY_URL, class_id:        item_hash[Constant::ITEM_HASH_CLASS_ID_KEY].to_s,
                                              instance_id:     item_hash[Constant::ITEM_HASH_INSTANCE_ID_KEY].to_s,
-                                             your_secret_key: Rails.application.secrets.your_secret_key)
+                                             your_secret_key: ENV['SECRET_KEY'])
     Connection.send_request(url)[Constant::HISTORY_KEY]
   end
 

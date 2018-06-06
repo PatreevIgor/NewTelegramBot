@@ -9,7 +9,7 @@ class Price
   
   def other_buy_orders_exist?(order)
     url = format(Constant::MASS_INFO_URL, sell: 0, buy: 2, history: 0, info: 0,
-                                          your_secret_key: Rails.application.secrets.your_secret_key)
+                                          your_secret_key: ENV['SECRET_KEY'])
     response = Connection.send_post_request(url, order)
 
     response["results"].first["buy_offers"].nil? ? false : true
@@ -21,7 +21,7 @@ class Price
                                           buy: 2,
                                           history: 0,
                                           info: 0,
-                                          your_secret_key: Rails.application.secrets.your_secret_key)
+                                          your_secret_key: ENV['SECRET_KEY'])
     response = Connection.send_post_request(url, order)
     response["results"].first["buy_offers"]["best_offer"]
   end
@@ -75,7 +75,7 @@ class Price
   def get_hash_min_middle_max_prices(params)
     url = format(Constant::ITEM_HISTORY_URL, class_id:        params[:class_id].to_s,
                                              instance_id:     params[:instance_id].to_s,
-                                             your_secret_key: Rails.application.secrets.your_secret_key)
+                                             your_secret_key: ENV['SECRET_KEY'])
     response = Connection.send_request(url)
     create_hash_min_middle_max_prices(response)
   end
@@ -117,7 +117,7 @@ class Price
   def item_informations(class_id, instance_id)
     Connection.send_request(format(Constant::ITEM_INFORMATION_URL, class_id:        class_id, 
                                                                    instance_id:     instance_id, 
-                                                                   your_secret_key: Rails.application.secrets.your_secret_key))
+                                                                   your_secret_key: ENV['SECRET_KEY']))
   end
     
   
@@ -138,14 +138,14 @@ class Price
   def curr_price_of_buy(item_hash) # текущая цена покупки
     url = format(Constant::BEST_BUY_OFFER_URL, class_id:        item_hash[Constant::ITEM_HASH_CLASS_ID_KEY],
                                                instance_id:     item_hash[Constant::ITEM_HASH_INSTANCE_ID_KEY],
-                                               your_secret_key: Rails.application.secrets.your_secret_key)
+                                               your_secret_key: ENV['SECRET_KEY'])
     price(url)
   end
 
   def curr_price_of_sell(item_hash) # текущая цена продажи
     url = format(Constant::BEST_SELL_OFFER_URL, class_id:        item_hash[Constant::ITEM_HASH_CLASS_ID_KEY],
                                                 instance_id:     item_hash[Constant::ITEM_HASH_INSTANCE_ID_KEY],
-                                                your_secret_key: Rails.application.secrets.your_secret_key)
+                                                your_secret_key: ENV['SECRET_KEY'])
     price(url)
   end
 
@@ -164,9 +164,10 @@ class Price
   end
 
   def item_history(item_hash)
+
     url = format(Constant::ITEM_HISTORY_URL, class_id:        item_hash[:class_id].to_s,
                                              instance_id:     item_hash[:instance_id].to_s,
-                                             your_secret_key: Rails.application.secrets.your_secret_key)
+                                             your_secret_key: ENV['SECRET_KEY'])
 
     Connection.send_request(url)
   end

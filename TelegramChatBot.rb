@@ -4,6 +4,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'dotenv'
+require 'pry'
 
 require './coefficient_calculator.rb'
 require './connection.rb'
@@ -35,15 +36,13 @@ class TelegramChatBot
         when Telegram::Bot::Types::CallbackQuery
           if message.data == 'Find New Item'
             bot.api.send_message(chat_id: message.from.id, text: "Search is performed!")
+            
 
-              rezult = []
-              [1,2,3,4,5,6].each do |x|
-                if x == 2 or x == 4
-                  rezult << x
-                end
-              end
+            bot.api.send_message(chat_id: message.from.id, text: "#{
 
-            bot.api.send_message(chat_id: message.from.id, text: "#{rezult}")
+              LinkGenerator.new.generate_link(ItemFinder.new.find_profitable_item)
+
+              }")
 
             # bot.api.send_message(chat_id: message.from.id, text: 'Make a choice2', reply_markup: markup2)
           elsif message.data == 'touch2'
