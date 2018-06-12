@@ -15,18 +15,9 @@ require './link_generator.rb'
 require './price.rb'
 require './task_performer.rb'
 
-# require './service_control_time_trading'
-# require './service_information_about_orders'
-# require './service_information_about_sales'
-# require './service_organizer'
 Dotenv.load
 
 class TelegramChatBot
-  # include Control_time_trading
-  # include Information_about_sales
-  # include Information_about_orders
-  # include Organizer
-
   def run
     Telegram::Bot::Client.run(ENV['HIDE_TOKEN']) do |bot|
       bot.listen do |message|
@@ -40,7 +31,13 @@ class TelegramChatBot
 
             bot.api.send_message(chat_id: message.from.id, text: "#{
 
+
+
+
               LinkGenerator.new.generate_link(ItemFinder.new.find_profitable_item)
+
+
+
 
               }")
 

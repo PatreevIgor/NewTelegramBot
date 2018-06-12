@@ -5,6 +5,8 @@
 # method coefficient_frequency_purchase returns 100 if item purchased every day one or better times
 #   and return 0 if items not sold within a month
 
+
+
 class CoefficientCalculator
   def coefficient_profit(item_hash)
     clean_benefit(item_hash) >= 2000 ? 100 : 0

@@ -1,21 +1,26 @@
 # frozen_string_literal: true
 
 class ItemFinder
-  def find_profitable_item
+  def find_profitable_item  # Метод возвращает одну (последнюю выгодную шмотку) В буд можно пределать, что бы возвращал все из 50-ти
     profitable_item = nil
     end_while       = false
 
     while end_while == false
+      puts last_50_sales
       last_50_sales.each do |item_hash|
-        if all_conditions_fulfilled?(item_hash)
+      # binding.pry
+
+        if all_conditions_fulfilled?(item_hash) == true
           end_while = true
-          break
+          profitable_item = item_hash
         end
-
-        profitable_item = item_hash
       end
-    end
 
+      break if end_while
+    end
+    # puts profitable_item
+    # puts "all_conditions_fulfilled? =" + all_conditions_fulfilled?(profitable_item).to_s
+    # puts "end_while? =" + end_while.to_s
     profitable_item
   end
 
@@ -32,6 +37,8 @@ class ItemFinder
        price.curr_price_of_sell(item_hash)              != 0    # исключаем те, которых нет в продаже
 
       true
+    else
+      false
     end
   end
 
