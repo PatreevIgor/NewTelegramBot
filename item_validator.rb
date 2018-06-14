@@ -9,9 +9,9 @@ class ItemValidator
     puts '----------------------'
  #  puts 'coef-fr_pur = ' + coef_fr_pur.to_s
 
-    if coef_profit > 80 #&&
-       #coef_cur_st > 80 #&&
-       #coef_fr_pur > 1
+    if coef_profit > 80 &&
+       coef_cur_st > 80 &&
+       coef_fr_pur > 1
        # (price.curr_price_of_buy(item_hash) + 0) < price.curr_middle_price(item_hash)
       true
     else
